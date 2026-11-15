@@ -1,5 +1,3 @@
-import createHttpError from "http-errors";
-
 /** @type {import("express").RequestHandler} */
 export default async function session(req, res, next) {
    try {
@@ -9,6 +7,6 @@ export default async function session(req, res, next) {
          data: req.user,
       });
    } catch (error) {
-      next(createHttpError.InternalServerError(error));
+      next(error);
    }
 }

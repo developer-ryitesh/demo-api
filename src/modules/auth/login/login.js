@@ -4,18 +4,27 @@ import { compare } from "bcrypt";
 import JWT from "#libs/jwt/index.js";
 import httpCookie from "#libs/cookie/index.js";
 import ENV from "#config/env.js";
+import { z } from "zod";
+import validate from "#libs/zod/index.js";
+
+const loginSchema = z
+   .object({
+      email: z.string().email("Invalid email format"),
+      password: z.string().min(6, "Password must be at least 6 characters"),
+   })
+   .strict();
 
 /** @type {import("express").RequestHandler} */
 export default async function login(req, res, next) {
    try {
-      const body = req.body;
+      const body = validate(loginSchema, req.body);
       const user = await User.findByEmail(body.email);
       if (!user) {
-         return next(createHttpError.NotFound("User not found"));
+         throw createHttpError.NotFound("User not found");
       }
       const match = await compare(body.password, user.password);
       if (!match) {
-         return next(createHttpError.Unauthorized());
+         throw createHttpError.Unauthorized();
       }
       const accessToken = JWT.createToken({
          data: { id: user?.id },
@@ -33,6 +42,6 @@ export default async function login(req, res, next) {
          data: { accessToken },
       });
    } catch (error) {
-      next(createHttpError.InternalServerError(error));
+      next(error);
    }
 }

@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n    \"password\": \"Root@123\",\r\n    \"confirm_password\": \"Root@123\"\r\n  }",
+              "raw": "{\r\n  \"email\": \"gorav@gmail.com\",\r\n    \"password\": \"Root@123\",\r\n    \"confirm_password\": \"Root@123\"\r\n  }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -54,7 +54,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Root@123\"\r\n}   ",
+              "raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Root@1234\"\r\n}   ",
               "options": {
                 "raw": {
                   "language": "json"
@@ -131,6 +131,43 @@
               "path": [
                 "user",
                 "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update-password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\":\"Root@1234\",\r\n    \"newPassword\":\"Root@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/user/update-password",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "user",
+                "update-password"
               ]
             }
           },

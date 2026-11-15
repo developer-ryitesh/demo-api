@@ -1,4 +1,3 @@
-import createHttpError from "http-errors";
 import ProfileModel from "#models/profile.model.js";
 
 export default class Profile {
@@ -16,7 +15,7 @@ export default class Profile {
             data,
          });
       } catch (error) {
-         next(createHttpError.InternalServerError(error));
+         next(error);
       }
    }
 }

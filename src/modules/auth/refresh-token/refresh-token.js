@@ -8,12 +8,12 @@ export default async function refreshToken(req, res, next) {
    try {
       const refreshToken = req.cookies?.refreshToken;
       if (!refreshToken) {
-         return next(createHttpError.NotFound("Refresh token not found"));
+         throw createHttpError.NotFound("Refresh token not found");
       }
       const token = await JWT.verifyToken(refreshToken);
       const user = await User.findById(token.id);
       if (!user) {
-         return next(createHttpError.Unauthorized());
+         throw createHttpError.Unauthorized();
       }
       const accessToken = JWT.createToken({
          data: { id: user.id },
@@ -25,6 +25,6 @@ export default async function refreshToken(req, res, next) {
          data: { accessToken },
       });
    } catch (error) {
-      next(createHttpError.InternalServerError(error));
+      next(error);
    }
 }
