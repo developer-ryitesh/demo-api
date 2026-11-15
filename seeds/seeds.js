@@ -12,7 +12,7 @@ async function seed() {
       // Create profiles table
       await db.query(`
          CREATE TABLE IF NOT EXISTS profiles (
-            profile_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             first_name VARCHAR(255) NOT NULL,
             last_name VARCHAR(255) NOT NULL,
             user_id INTEGER NOT NULL UNIQUE,

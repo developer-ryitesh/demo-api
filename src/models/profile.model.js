@@ -14,11 +14,11 @@ export default class ProfileModel {
             DO UPDATE SET
                first_name = EXCLUDED.first_name,
                last_name = EXCLUDED.last_name
-            RETURNING profile_id
+            RETURNING id
          `,
          [first_name, last_name, user_id],
       );
 
-      return result.rows[0].profile_id;
+      return result.rows[0].id;
    }
 }

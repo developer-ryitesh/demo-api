@@ -17,57 +17,62 @@ export default class User {
    // Find all users
    static async findAll() {
       const sql = `
-         SELECT
-            u.id,
-            u.email,
-            u.role,
-            u.created_at,
-            p.profile_id,
-            p.first_name,
-            p.last_name
-         FROM users AS u
-         LEFT JOIN profiles AS p
-            ON u.id = p.user_id
-         ORDER BY u.id DESC
-      `;
+      SELECT
+         u.id AS user_id,
+         u.email,
+         u.role,
+         u.created_at,
+         p.id AS profile_id,
+         p.first_name,
+         p.last_name
+      FROM users AS u
+      LEFT JOIN profiles AS p
+         ON u.id = p.user_id
+      ORDER BY u.id DESC
+   `;
 
       const { rows } = await db.query(sql);
 
-      return rows.map(({ profile_id, first_name, last_name, ...user }) => ({
+      return rows.map(({ user_id, profile_id, first_name, last_name, ...user }) => ({
+         id: user_id,
          ...user,
-         profile: profile_id ? { first_name, last_name } : null,
+         profile: profile_id
+            ? {
+                 id: profile_id,
+                 first_name,
+                 last_name,
+              }
+            : null,
       }));
    }
-
    // Find user by ID
    static async findById(userId) {
       const sql = `
-         SELECT
-            u.id,
-            u.email,
-            u.created_at,
-            u.role,
-            p.profile_id,
-            p.first_name,
-            p.last_name
-         FROM users AS u
-         LEFT JOIN profiles AS p
-            ON u.id = p.user_id
-         WHERE u.id = $1
-         LIMIT 1
-      `;
+      SELECT
+         u.id AS user_id,
+         u.email,
+         u.created_at,
+         u.role,
+         p.id AS profile_id,
+         p.first_name,
+         p.last_name
+      FROM users AS u
+      LEFT JOIN profiles AS p
+         ON u.id = p.user_id
+      WHERE u.id = $1
+      LIMIT 1
+   `;
 
       const { rows } = await db.query(sql, [userId]);
 
       if (!rows.length) return null;
 
-      const { profile_id, first_name, last_name, ...user } = rows[0];
-
+      const { user_id, profile_id, first_name, last_name, ...user } = rows[0];
       return {
+         id: user_id,
          ...user,
          profile: profile_id
             ? {
-                 profile_id,
                  first_name,
                  last_name,
               }

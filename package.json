@@ -5,7 +5,8 @@
    "scripts": {
       "start": "node src/index.js",
       "dev": "node --watch src/index.js",
-      "seeds": "node seeds/seeds.js"
+      "seeds": "node seeds/seeds.js",
+      "swagger:generate": "node docs/script/index.js"
    },
    "dependencies": {
       "bcrypt": "^6.0.0",
@@ -17,9 +18,14 @@
       "jsonwebtoken": "^9.0.3",
       "mysql2": "^3.24.6",
       "pg": "^8.23.1",
+      "swagger-ui-express": "^5.0.1",
+      "yamljs": "^0.3.0",
       "zod": "^4.6.7"
    },
    "imports": {
       "#*": "./src/*"
+   },
+   "devDependencies": {
+      "postman-to-openapi": "^1.7.3"
    }
 }

@@ -3,6 +3,9 @@ dotenv.config();
 
 const ENV = {
    PORT: process.env.PORT,
+   get SERVER_URL() {
+      return `http://localhost:${this.PORT}`;
+   },
    //DB
    DB_HOST: process.env.DB_HOST,
    DB_USER: process.env.DB_USER,

@@ -9,9 +9,9 @@ export default function userRoutes() {
    const routes = Router();
    routes.get("/all", auth(["ADMIN"]), getUsers);
    routes.get("/session", auth(["ADMIN", "USER"]), session);
-   routes.post("/profile", auth(["USER", "ADMIN"]), Profile.create);
+   routes.post("/profile", auth(["ADMIN", "USER"]), Profile.create);
    routes.get("/:id", auth(["ADMIN"]), getUserInfo);
    routes.delete("/:id", auth(["ADMIN"]), deleteUser);
-   routes.get("/logout", auth(["USER", "ADMIN"]), logout);
+   routes.get("/logout", auth(["ADMIN", "USER"]), logout);
    return routes;
 }

@@ -1,0 +1,454 @@
+openapi: 3.0.3
+
+info:
+   title: Mock API
+   description: |
+      REST API documentation for authentication, user management,
+      and user profile operations.
+
+      ## Features
+      - User registration and login
+      - JWT authentication
+      - Token refresh
+      - User session management
+      - User CRUD operations
+      - Profile management
+   version: 1.0.0
+   contact:
+      name: API Support
+      email: support@example.com
+
+servers:
+   - url: http://localhost:5000/api/v1
+     description: Local development
+   - url: https://api.example.com/api/v1
+     description: Production
+
+tags:
+   - name: Auth
+     description: Authentication and token management
+   - name: User
+     description: User management operations
+   - name: Profile
+     description: User profile operations
+
+security:
+   - BearerAuth: []
+
+paths:
+   /auth/register:
+      post:
+         tags: [Auth]
+         summary: Register a new user
+         description: Creates a new user account.
+         operationId: registerUser
+         security: []
+         requestBody:
+            required: true
+            content:
+               application/json:
+                  schema:
+                     $ref: "#/components/schemas/RegisterRequest"
+                  example:
+                     email: admin@gmail.com
+                     password: Root@123
+                     confirm_password: Root@123
+         responses:
+            "201":
+               description: User registered successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/SuccessResponse"
+            "400":
+               description: Invalid request or validation error
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+            "409":
+               description: Email already exists
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+            "500":
+               $ref: "#/components/responses/InternalServerError"
+
+   /auth/login:
+      post:
+         tags: [Auth]
+         summary: Login user
+         description: Authenticates user credentials and returns an access token.
+         operationId: loginUser
+         security: []
+         requestBody:
+            required: true
+            content:
+               application/json:
+                  schema:
+                     $ref: "#/components/schemas/LoginRequest"
+                  example:
+                     email: admin@gmail.com
+                     password: Root@123
+         responses:
+            "200":
+               description: Login successful
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/AuthResponse"
+            "401":
+               description: Invalid email or password
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+            "500":
+               $ref: "#/components/responses/InternalServerError"
+
+   /auth/refresh-token:
+      get:
+         tags: [Auth]
+         summary: Refresh access token
+         description: Generates a new access token using a valid refresh token.
+         operationId: refreshToken
+         security:
+            - BearerAuth: []
+         responses:
+            "200":
+               description: Token refreshed successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/AuthResponse"
+            "401":
+               description: Invalid or expired refresh token
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+
+   /user/logout:
+      get:
+         tags: [User]
+         summary: Logout user
+         description: Logs out the currently authenticated user.
+         operationId: logoutUser
+         responses:
+            "200":
+               description: Logout successful
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/SuccessResponse"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+
+   /user/{userId}:
+      get:
+         tags: [User]
+         summary: Get user details
+         description: Retrieves a user by their ID.
+         operationId: getUserById
+         parameters:
+            - $ref: "#/components/parameters/UserId"
+         responses:
+            "200":
+               description: User retrieved successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/UserResponse"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+            "404":
+               description: User not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+
+      delete:
+         tags: [User]
+         summary: Delete user
+         description: Deletes a user by their ID.
+         operationId: deleteUser
+         parameters:
+            - $ref: "#/components/parameters/UserId"
+         responses:
+            "200":
+               description: User deleted successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/SuccessResponse"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+            "404":
+               description: User not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+
+   /user/session:
+      get:
+         tags: [User]
+         summary: Get current user session
+         description: Returns details of the currently authenticated user.
+         operationId: getUserSession
+         responses:
+            "200":
+               description: Session retrieved successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/UserResponse"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+
+   /user/all:
+      get:
+         tags: [User]
+         summary: Get all users
+         description: Retrieves the list of all registered users.
+         operationId: getAllUsers
+         parameters:
+            - name: page
+              in: query
+              description: Page number (if pagination is supported).
+              schema:
+                 type: integer
+                 minimum: 1
+                 default: 1
+            - name: limit
+              in: query
+              description: Number of users per page (if pagination is supported).
+              schema:
+                 type: integer
+                 minimum: 1
+                 maximum: 100
+                 default: 10
+         responses:
+            "200":
+               description: Users retrieved successfully
+               content:
+                  application/json:
+                     schema:
+                        type: object
+                        properties:
+                           success:
+                              type: boolean
+                              example: true
+                           data:
+                              type: array
+                              items:
+                                 $ref: "#/components/schemas/User"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+
+   /user/profile:
+      post:
+         tags: [Profile]
+         summary: Create user profile
+         description: Creates a profile for the authenticated user.
+         operationId: createUserProfile
+         requestBody:
+            required: true
+            content:
+               application/json:
+                  schema:
+                     $ref: "#/components/schemas/CreateProfileRequest"
+                  example:
+                     first_name: Admin
+                     last_name: Sudso
+         responses:
+            "201":
+               description: Profile created successfully
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ProfileResponse"
+            "400":
+               description: Invalid profile data
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+            "401":
+               $ref: "#/components/responses/Unauthorized"
+            "409":
+               description: Profile already exists
+               content:
+                  application/json:
+                     schema:
+                        $ref: "#/components/schemas/ErrorResponse"
+
+components:
+   securitySchemes:
+      BearerAuth:
+         type: http
+         scheme: bearer
+         bearerFormat: JWT
+         description: Enter your JWT access token.
+
+   parameters:
+      UserId:
+         name: userId
+         in: path
+         required: true
+         description: Unique user ID
+         schema:
+            type: integer
+            example: 1
+
+   schemas:
+      RegisterRequest:
+         type: object
+         required:
+            - email
+            - password
+            - confirm_password
+         properties:
+            email:
+               type: string
+               format: email
+               example: admin@gmail.com
+            password:
+               type: string
+               format: password
+               minLength: 8
+               example: Root@123
+            confirm_password:
+               type: string
+               format: password
+               example: Root@123
+
+      LoginRequest:
+         type: object
+         required:
+            - email
+            - password
+         properties:
+            email:
+               type: string
+               format: email
+               example: admin@gmail.com
+            password:
+               type: string
+               format: password
+               example: Root@123
+
+      CreateProfileRequest:
+         type: object
+         required:
+            - first_name
+            - last_name
+         properties:
+            first_name:
+               type: string
+               example: Admin
+            last_name:
+               type: string
+               example: Sudso
+
+      User:
+         type: object
+         properties:
+            id:
+               type: integer
+               example: 1
+            email:
+               type: string
+               format: email
+               example: admin@gmail.com
+            role:
+               type: string
+               example: admin
+            created_at:
+               type: string
+               format: date-time
+               example: "2026-11-16T10:00:00Z"
+
+      Profile:
+         type: object
+         properties:
+            id:
+               type: integer
+               example: 1
+            first_name:
+               type: string
+               example: Admin
+            last_name:
+               type: string
+               example: Sudso
+
+      SuccessResponse:
+         type: object
+         properties:
+            success:
+               type: boolean
+               example: true
+            message:
+               type: string
+               example: Operation successful
+
+      AuthResponse:
+         type: object
+         properties:
+            success:
+               type: boolean
+               example: true
+            message:
+               type: string
+               example: Login successful
+            data:
+               type: object
+               properties:
+                  accessToken:
+                     type: string
+                     example: eyJhbGciOiJIUzI1NiJ9.example.signature
+
+      UserResponse:
+         type: object
+         properties:
+            success:
+               type: boolean
+               example: true
+            data:
+               $ref: "#/components/schemas/User"
+
+      ProfileResponse:
+         type: object
+         properties:
+            success:
+               type: boolean
+               example: true
+            data:
+               $ref: "#/components/schemas/Profile"
+
+      ErrorResponse:
+         type: object
+         properties:
+            success:
+               type: boolean
+               example: false
+            message:
+               type: string
+               example: Something went wrong
+
+   responses:
+      Unauthorized:
+         description: Authentication required or token invalid
+         content:
+            application/json:
+               schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+      InternalServerError:
+         description: Internal server error
+         content:
+            application/json:
+               schema:
+                  $ref: "#/components/schemas/ErrorResponse"
