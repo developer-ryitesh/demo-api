@@ -1,0 +1,87 @@
+src/
+├── config/                   # Environment & app configuration
+│   ├── env.ts
+│   └── app.config.ts
+│
+├── db/                       # Database connection
+│   └── mysql.ts
+│
+├── models/                   # Shared database models
+│   ├── user.model.ts
+│   ├── profile.model.ts
+│   ├── role.model.ts
+│   ├── refresh-token.model.ts
+│   ├── product.model.ts
+│   ├── category.model.ts
+│   ├── order.model.ts
+│   └── order-item.model.ts
+│
+├── modules/                  # Feature-wise business logic
+│   ├── auth/
+│   │   ├── auth.routes.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── auth.validation.ts
+│   ├── user/
+│   │   ├── user.routes.ts
+│   │   ├── user.controller.ts
+│   │   ├── user.service.ts
+│   │   └── user.validation.ts
+│   ├── product/
+│   │   ├── product.routes.ts
+│   │   ├── product.controller.ts
+│   │   ├── product.service.ts
+│   │   └── product.validation.ts
+│   └── order/
+│       ├── order.routes.ts
+│       ├── order.controller.ts
+│       └── order.service.ts
+│
+├── libs/                     # Reusable technical integrations
+│   ├── jwt/
+│   │   └── index.ts
+│   ├── password/
+│   │   └── index.ts
+│   ├── cookie/
+│   │   └── index.ts
+│   ├── mail/
+│   │   └── index.ts
+│   └── logger/
+│       └── index.ts
+│
+├── types/                    # Shared TypeScript types
+│   ├── express.d.ts
+│   ├── api.types.ts
+│   ├── auth.types.ts
+│   └── common.types.ts
+│
+├── middlewares/
+│   ├── auth.middleware.ts
+│   ├── validate.middleware.ts
+│   ├── not-found.middleware.ts
+│   └── error.middleware.ts
+│
+├── utils/                    # Small, generic helper functions
+│   ├── api-response.ts
+│   ├── async-handler.ts
+│   └── pick.ts
+│
+├── constants/
+│   ├── app.constants.ts
+│   └── http.constants.ts
+│
+├── app.ts
+└── server.ts
+
+tests/
+├── auth.test.ts
+└── user.test.ts
+
+.env
+.env.example
+.gitignore
+package.json
+tsconfig.json
+tsup.config.ts
+
+//Supabase@123
