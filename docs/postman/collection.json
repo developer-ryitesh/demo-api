@@ -2,6 +2,7 @@
   "info": {
     "_postman_id": "fac71914-3eb0-4d52-8364-4781a45abc45",
     "name": "mock-api",
+    "description": "## mock-api\n\nThis collection provides a mock API layer for simulating a complete user authentication and account management backend. It is organized into three functional groups:\n\n### Auth\n\nHandles all authentication flows, including user **registration**, **login**, and **token re-authentication** (`re-auth`). Use these endpoints to simulate onboarding new users and managing session tokens.\n\n### User\n\nCovers core user account operations such as **logout**, **password updates**, **account deletion**, **session management**, **listing users**, and retrieving **user info**. These endpoints represent the full lifecycle of a user account.\n\n### Profile\n\nContains the **create-profile** endpoint for setting up a user's profile after registration.\n\n---\n\nThis collection is intended for use with a mock server to enable frontend development and integration testing without requiring a live backend. Global variables `BASE_URL` and `accessToken` are used across requests for base URL configuration and bearer token authorization.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "40773121"
   },
@@ -137,6 +138,43 @@
           "response": []
         },
         {
+          "name": "update-profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"first_name\": \"admin\",\r\n    \"last_name\": \"sudso\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/user/profile",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "user",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "update-password",
           "request": {
             "auth": {
@@ -153,7 +191,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"oldPassword\":\"Root@1234\",\r\n    \"newPassword\":\"Root@123\"\r\n}",
+              "raw": "{\r\n    \"oldPassword\": \"Root@1234\",\r\n    \"newPassword\": \"Root@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -280,48 +318,6 @@
               "path": [
                 "user",
                 "1"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "profile",
-      "item": [
-        {
-          "name": "create-profile",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"first_name\":\"admin\",\r\n    \"last_name\":\"sudso\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/user/profile",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "user",
-                "profile"
               ]
             }
           },

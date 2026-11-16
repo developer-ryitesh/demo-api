@@ -1,13 +1,52 @@
 openapi: 3.0.0
 info:
   title: mock-api
+  description: >-
+    ## mock-api
+
+
+    This collection provides a mock API layer for simulating a complete user
+    authentication and account management backend. It is organized into three
+    functional groups:
+
+
+    ### Auth
+
+
+    Handles all authentication flows, including user **registration**,
+    **login**, and **token re-authentication** (`re-auth`). Use these endpoints
+    to simulate onboarding new users and managing session tokens.
+
+
+    ### User
+
+
+    Covers core user account operations such as **logout**, **password
+    updates**, **account deletion**, **session management**, **listing users**,
+    and retrieving **user info**. These endpoints represent the full lifecycle
+    of a user account.
+
+
+    ### Profile
+
+
+    Contains the **create-profile** endpoint for setting up a user's profile
+    after registration.
+
+
+    ---
+
+
+    This collection is intended for use with a mock server to enable frontend
+    development and integration testing without requiring a live backend. Global
+    variables `BASE_URL` and `accessToken` are used across requests for base URL
+    configuration and bearer token authorization.
   version: 1.0.0
 servers:
   - url: undefined://{{BASE_URL}}
 tags:
   - name: auth
   - name: user
-  - name: profile
 paths:
   /auth/register:
     post:
@@ -66,6 +105,24 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /user/profile:
+    post:
+      tags:
+        - user
+      summary: update-profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: admin
+                last_name: sudso
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
   /user/update-password:
     put:
       tags:
@@ -119,24 +176,6 @@ paths:
       tags:
         - user
       summary: user-info
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /user/profile:
-    post:
-      tags:
-        - profile
-      summary: create-profile
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                first_name: admin
-                last_name: sudso
       responses:
         '200':
           description: Successful response

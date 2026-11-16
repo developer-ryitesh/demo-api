@@ -4,9 +4,8 @@ import createHttpError from "http-errors";
 export default class ProfileModel {
    static async create({ user_id, first_name, last_name }) {
       try {
-         const result = await db.query(
-            `
-               INSERT INTO profiles (
+         const result = await db.query(`
+            INSERT INTO profiles (
                   first_name,
                   last_name,
                   user_id
@@ -20,7 +19,6 @@ export default class ProfileModel {
             `,
             [first_name, last_name, user_id],
          );
-
          return result.rows[0].id;
       } catch (error) {
          throw createHttpError.InternalServerError(error);

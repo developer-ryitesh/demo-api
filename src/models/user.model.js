@@ -10,9 +10,7 @@ export default class User {
             VALUES ($1, $2)
             RETURNING id
          `;
-
          const { rows } = await db.query(sql, [email, password]);
-
          return rows[0];
       } catch (error) {
          throw createHttpError.InternalServerError(error.message);
@@ -36,9 +34,7 @@ export default class User {
                ON u.id = p.user_id
             ORDER BY u.id DESC
          `;
-
          const { rows } = await db.query(sql);
-
          return rows.map(({ user_id, profile_id, first_name, last_name, ...user }) => ({
             id: user_id,
             ...user,
@@ -74,13 +70,9 @@ export default class User {
             WHERE u.id = $1
             LIMIT 1
          `;
-
          const { rows } = await db.query(sql, [userId]);
-
          if (!rows.length) return null;
-
          const { user_id, profile_id, first_name, last_name, ...user } = rows[0];
-
          return {
             id: user_id,
             ...user,
@@ -100,9 +92,7 @@ export default class User {
             WHERE email = $1
             LIMIT 1
          `;
-
          const { rows } = await db.query(sql, [email]);
-
          return rows[0] ?? null;
       } catch (error) {
          throw createHttpError.InternalServerError(error.message);
@@ -117,9 +107,7 @@ export default class User {
             WHERE id = $1
             RETURNING id
          `;
-
          const { rows } = await db.query(sql, [id]);
-
          return rows.length > 0;
       } catch (error) {
          throw createHttpError.InternalServerError(error.message);
