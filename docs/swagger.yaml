@@ -79,7 +79,7 @@ paths:
               type: object
               example:
                 email: admin@gmail.com
-                password: Root@1234
+                password: Root@123
       responses:
         '200':
           description: Successful response
@@ -116,8 +116,26 @@ paths:
             schema:
               type: object
               example:
-                first_name: admin
-                last_name: sudso
+                first_name: gorav
+                last_name: yadav
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/activation:
+    post:
+      tags:
+        - user
+      summary: activation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_id: 1
+                is_active: true
       responses:
         '200':
           description: Successful response
@@ -134,8 +152,8 @@ paths:
             schema:
               type: object
               example:
-                oldPassword: Root@1234
-                newPassword: Root@123
+                old_password: Root@1234
+                new_password: Root@123
       responses:
         '200':
           description: Successful response

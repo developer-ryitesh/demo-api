@@ -4,7 +4,7 @@ export default class Profile {
    /** @type {import("express").RequestHandler} */
    static async create(req, res, next) {
       try {
-         const data = await ProfileModel.create({
+         const data = await ProfileModel.update({
             user_id: req.user.id,
             first_name: req.body.first_name,
             last_name: req.body.last_name,

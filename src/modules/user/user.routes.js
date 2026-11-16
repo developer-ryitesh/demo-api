@@ -7,6 +7,7 @@ import { deleteUser } from "./delete-user/delete-user.js";
 import { getUsers } from "./users/users.js";
 import { updatePassword } from "./update-password/update-password.js";
 import { getUserInfo } from "./info/user-info.js";
+import activation from "./activation/activation.js";
 
 export default function userRoutes() {
    const routes = Router();
@@ -17,5 +18,7 @@ export default function userRoutes() {
    routes.put("/update-password", auth(["ADMIN", "USER"]), updatePassword);
    routes.get("/:id", auth(["ADMIN"]), getUserInfo);
    routes.delete("/:id", auth(["ADMIN"]), deleteUser);
+   routes.post("/activation", auth(["ADMIN"]), activation);
+
    return routes;
 }

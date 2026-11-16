@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"gorav@gmail.com\",\r\n    \"password\": \"Root@123\",\r\n    \"confirm_password\": \"Root@123\"\r\n  }",
+              "raw": "{\r\n  \"email\": \"gorav@gmail.com\",\r\n  \"password\": \"Root@123\",\r\n\"confirm_password\": \"Root@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -55,7 +55,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Root@1234\"\r\n}   ",
+              "raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Root@123\"\r\n}   ",
               "options": {
                 "raw": {
                   "language": "json"
@@ -154,7 +154,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"first_name\": \"admin\",\r\n    \"last_name\": \"sudso\"\r\n}",
+              "raw": "{\r\n    \"first_name\": \"gorav\",\r\n    \"last_name\": \"yadav\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -169,6 +169,43 @@
               "path": [
                 "user",
                 "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "activation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user_id\": 1,\r\n    \"is_active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/user/activation",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "user",
+                "activation"
               ]
             }
           },
@@ -191,7 +228,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"oldPassword\": \"Root@1234\",\r\n    \"newPassword\": \"Root@123\"\r\n}",
+              "raw": "{\r\n    \"old_password\": \"Root@1234\",\r\n    \"new_password\": \"Root@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

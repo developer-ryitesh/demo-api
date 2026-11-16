@@ -6,8 +6,11 @@ import { compare, hash } from "bcrypt";
 
 const updatePasswordSchema = z
    .object({
-      oldPassword: z.string("oldPassword is required"),
-      newPassword: z.string("newPassword is required").min(8, "Password must be at least 8 characters"),
+      old_password: z //
+         .string("old_password is required"),
+      new_password: z //
+         .string("new_password is required")
+         .min(8, "Password must be at least 8 characters"),
    })
    .strict();
 
@@ -15,11 +18,11 @@ export async function updatePassword(req, res, next) {
    try {
       const body = validate(updatePasswordSchema, req.body);
       const user = await User.findById(req.user.id);
-      const isMatch = await compare(body.oldPassword, user?.password);
+      const isMatch = await compare(body.old_password, user?.password);
       if (!isMatch) {
          throw createHttpError.BadRequest("Old password is incorrect");
       }
-      const hashedNewPassword = await hash(body.newPassword, 10);
+      const hashedNewPassword = await hash(body.new_password, 10);
       await User.updatePassword({
          id: req.user.id,
          password: hashedNewPassword,

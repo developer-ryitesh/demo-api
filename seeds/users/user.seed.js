@@ -21,6 +21,8 @@ export default async function UserSeed() {
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
             role user_role DEFAULT 'USER',
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            is_verified BOOLEAN NOT NULL DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
          )
       `);

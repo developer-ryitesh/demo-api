@@ -26,6 +26,9 @@ export default function auth(requiredRoles = []) {
          if (!user) {
             throw createHttpError.Unauthorized("User not found.");
          }
+         if (!user.is_active) {
+            throw createHttpError.Forbidden("Your account has been deactivated.");
+         }
          if (requiredRoles.length > 0 && !requiredRoles.includes(user.role)) {
             throw createHttpError.Forbidden("You do not have permission to access this resource.");
          }

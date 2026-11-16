@@ -26,6 +26,8 @@ export default class User {
                u.email,
                u.role,
                u.created_at,
+               u.is_active,
+               u.is_verified,
                p.id AS profile_id,
                p.first_name,
                p.last_name
@@ -61,6 +63,8 @@ export default class User {
                u.password,
                u.created_at,
                u.role,
+               u.is_active,
+               u.is_verified,
                p.id AS profile_id,
                p.first_name,
                p.last_name
@@ -93,6 +97,22 @@ export default class User {
             LIMIT 1
          `;
          const { rows } = await db.query(sql, [email]);
+         return rows[0] ?? null;
+      } catch (error) {
+         throw createHttpError.InternalServerError(error.message);
+      }
+   }
+
+   static async updateActiveStatus({ id, is_active }) {
+      try {
+         const sql = `
+         UPDATE users
+         SET is_active = $1
+         WHERE id = $2
+         RETURNING id, is_active
+      `;
+
+         const { rows } = await db.query(sql, [is_active, id]);
          return rows[0] ?? null;
       } catch (error) {
          throw createHttpError.InternalServerError(error.message);
