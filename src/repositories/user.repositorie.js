@@ -149,4 +149,18 @@ export default class User {
          throw createHttpError.InternalServerError(error.message);
       }
    }
+
+   static async inviteUser({ email, password }) {
+      try {
+         const sql = `
+       INSERT INTO users (email, password, is_active, role)
+       VALUES ($1, $2, $3, $4)
+       RETURNING *
+         `;
+         const { rows } = await db.query(sql, [email, password, false, "USER"]);
+         return rows[0];
+      } catch (error) {
+         throw createHttpError.InternalServerError(error.message);
+      }
+   }
 }

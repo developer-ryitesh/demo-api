@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"gorav@gmail.com\",\r\n  \"password\": \"Root@123\",\r\n\"confirm_password\": \"Root@123\"\r\n}",
+              "raw": "{\r\n  \"email\": \"gorav@gmail.com\",\r\n  \"password\": \"Root@123\",\r\n  \"confirm_password\": \"Root@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -122,7 +122,7 @@
                 }
               ]
             },
-            "method": "GET",
+            "method": "POST",
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/user/logout",
@@ -154,7 +154,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"first_name\": \"gorav\",\r\n    \"last_name\": \"yadav\"\r\n}",
+              "raw": "{\r\n    \"first_name\": \"admin\",\r\n    \"last_name\": \"sup2\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -187,11 +187,11 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"user_id\": 1,\r\n    \"is_active\": true\r\n}",
+              "raw": "{\r\n    \"user_id\": 12,\r\n    \"is_active\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -264,13 +264,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{BASE_URL}}/user/2",
+              "raw": "{{BASE_URL}}/user/11",
               "host": [
                 "{{BASE_URL}}"
               ],
               "path": [
                 "user",
-                "2"
+                "11"
               ]
             }
           },
@@ -333,6 +333,43 @@
           "response": []
         },
         {
+          "name": "invite",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"sitova9740@artegin.com\",\"password\":\"Root@123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/user/invite",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "user",
+                "invite"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "user-info",
           "request": {
             "auth": {
@@ -348,13 +385,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{BASE_URL}}/user/1",
+              "raw": "{{BASE_URL}}/user/11",
               "host": [
                 "{{BASE_URL}}"
               ],
               "path": [
                 "user",
-                "1"
+                "11"
               ]
             }
           },

@@ -16,6 +16,13 @@ const ENV = {
    JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
    REFRESH_TOKEN_EXPIRES_IN: String(process.env.REFRESH_TOKEN_EXPIRES_IN),
    ACCESS_TOKEN_EXPIRES_IN: String(process.env.ACCESS_TOKEN_EXPIRES_IN),
+
+   //MAIL
+   SMPT_HOST: process.env.SMPT_HOST,
+   SMPT_PORT: Number(process.env.SMPT_PORT),
+   SMPT_SERVICE: process.env.SMPT_SERVICE,
+   SMPT_MAIL: process.env.SMPT_MAIL,
+   SMPT_PASSWORD: process.env.SMPT_PASSWORD,
 };
 
 export default ENV;

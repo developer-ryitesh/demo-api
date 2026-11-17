@@ -1,6 +1,8 @@
+import Mail from "#libs/mail/index.js";
 import validate from "#libs/zod/index.js";
+import User from "#repositories/user.repositorie.js";
 import AdminService from "../services/admin.service.js";
-import { activationSchema } from "../validation/user.validation.js";
+import { activationSchema, inviteUserSchema } from "../validation/user.validation.js";
 
 export default class AdminController {
    static async getUsers(req, res, next) {
@@ -44,6 +46,37 @@ export default class AdminController {
          res.status(200).json({
             success: true,
             message: `User ${body.is_active ? "activated" : "deactivated"} successfully`,
+         });
+      } catch (error) {
+         next(error);
+      }
+   }
+
+   static async inviteUser(req, res, next) {
+      try {
+         const body = validate(inviteUserSchema, req.body);
+         const result = await AdminService.inviteUser({
+            email: body.email,
+            password: body.password,
+         });
+         try {
+            await Mail.send({
+               to: [body.email],
+               subject: "Welcome Mail",
+               template: "welcome.mail",
+               data: {
+                  email: body.email,
+                  password: body.password,
+                  action: `http://localhost:3000/auth/login`,
+               },
+            });
+         } catch (error) {
+            console.log(error);
+         }
+         res.status(200).json({
+            success: true,
+            data: {},
+            message: `Invitation sent to ${result.email} successfully!`,
          });
       } catch (error) {
          next(error);

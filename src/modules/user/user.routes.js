@@ -14,6 +14,7 @@ export default function userRoutes() {
    // Admin routes
    routes.get("/all", auth(["ADMIN"]), AdminController.getUsers);
    routes.patch("/activation", auth(["ADMIN"]), AdminController.activation);
+   routes.post("/invite", [auth(["ADMIN"])], AdminController.inviteUser);
    routes.get("/:id", auth(["ADMIN"]), AdminController.getUserInfo);
    routes.delete("/:id", auth(["ADMIN"]), AdminController.deleteUser);
    return routes;

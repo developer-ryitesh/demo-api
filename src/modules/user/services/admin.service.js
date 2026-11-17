@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
 import User from "#repositories/user.repositorie.js";
+import { genSalt, hash } from "bcrypt";
 
 export default class AdminService {
    static async getUsers() {
@@ -26,6 +27,20 @@ export default class AdminService {
       if (!result) {
          throw createHttpError.NotFound("User not found");
       }
+      return result;
+   }
+
+   static async inviteUser({ email, password }) {
+      const user = await User.findByEmail(email);
+      if (user) {
+         throw createHttpError.BadRequest("User already exists");
+      }
+      const salt = await genSalt();
+      const hashedPassword = await hash(password, salt);
+      const result = await User.inviteUser({
+         email: email,
+         password: hashedPassword,
+      });
       return result;
    }
 

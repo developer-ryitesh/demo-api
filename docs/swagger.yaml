@@ -96,10 +96,12 @@ paths:
           content:
             application/json: {}
   /user/logout:
-    get:
+    post:
       tags:
         - user
       summary: logout
+      requestBody:
+        content: {}
       responses:
         '200':
           description: Successful response
@@ -116,15 +118,15 @@ paths:
             schema:
               type: object
               example:
-                first_name: gorav
-                last_name: yadav
+                first_name: admin
+                last_name: sup2
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
   /user/activation:
-    post:
+    patch:
       tags:
         - user
       summary: activation
@@ -134,7 +136,7 @@ paths:
             schema:
               type: object
               example:
-                user_id: 1
+                user_id: 12
                 is_active: true
       responses:
         '200':
@@ -159,11 +161,20 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /user/2:
+  /user/11:
     delete:
       tags:
         - user
       summary: delete-user
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - user
+      summary: user-info
       responses:
         '200':
           description: Successful response
@@ -189,11 +200,19 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /user/1:
-    get:
+  /user/invite:
+    post:
       tags:
         - user
-      summary: user-info
+      summary: invite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: sitova9740@artegin.com
+                password: Root@123
       responses:
         '200':
           description: Successful response
