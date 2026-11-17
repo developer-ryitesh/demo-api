@@ -27,6 +27,7 @@
       "#*": "./src/*"
    },
    "devDependencies": {
-      "postman-to-openapi": "^1.7.3"
+      "postman-to-openapi": "^1.7.3",
+      "cross-env": "^10.0.0"
    }
 }
