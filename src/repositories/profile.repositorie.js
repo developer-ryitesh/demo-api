@@ -1,7 +1,7 @@
 import db from "#db/index.js";
 import createHttpError from "http-errors";
 
-export default class ProfileModel {
+export default class Profile {
    static async update({ user_id, first_name, last_name }) {
       try {
          const { rows } = await db.query(`SELECT id FROM profiles WHERE user_id = $1`, [user_id]);
@@ -10,7 +10,8 @@ export default class ProfileModel {
 
          if (rows.length > 0) {
             // Update existing profile
-            result = await db.query(`
+            result = await db.query(
+               `
                   UPDATE profiles
                   SET
                      first_name = COALESCE($1, first_name),

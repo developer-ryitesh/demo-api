@@ -15,8 +15,12 @@ src/
 │   ├── category.model.ts
 │   ├── order.model.ts
 │   └── order-item.model.ts
-│
-├── modules/                  # Feature-wise business logic
+├── repositories/
+│   ├── user.repository.ts
+│   ├── profile.repository.ts
+│   └── role.repository.ts
+|
+├── modules/                  
 │   ├── auth/
 │   │   ├── auth.routes.ts
 │   │   ├── auth.controller.ts

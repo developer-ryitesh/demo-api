@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import JWT from "#libs/jwt/index.js";
-import User from "#models/user.model.js";
+import User from "#repositories/user.repositorie.js";
 
 /**
  * Authentication middleware
