@@ -87,5 +87,3 @@ tests/
 package.json
 tsconfig.json
 tsup.config.ts
-
-//Supabase@123
