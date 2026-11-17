@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const ENV = {
-   PORT: process.env.PORT,
+   PORT: process.env.PORT || 3000,
+   IS_PRODUCTION: process.env.NODE_ENV === "production",
    get SERVER_URL() {
-      return `http://localhost:${this.PORT}`;
+      return this.IS_PRODUCTION ? process.env.PRODUCTION_URL : `http://localhost:${this.PORT}`;
    },
    //DB
    DB_HOST: process.env.DB_HOST,
