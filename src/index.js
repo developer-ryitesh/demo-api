@@ -6,7 +6,7 @@ const server = http.createServer(app);
 server.listen(ENV.PORT, () => {
    console.log("___________________________________________\n");
    console.log(`💻 MODE : ${ENV.IS_PRODUCTION ? "PRODUCTION" : "DEVELOPMENT"}`);
-   console.log(`Server listening on ${ENV.SERVER_URL}/api/v1`);
+   console.log(`🌐 Server : ${ENV.SERVER_URL}/api/v1`);
    console.log(`📌 PORT : ${ENV.PORT}`);
    console.log("___________________________________________\n");
 });
