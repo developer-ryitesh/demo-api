@@ -2,9 +2,10 @@ import Mail from "#libs/mail/index.js";
 import validate from "#libs/zod/index.js";
 import User from "#repositories/user.repositorie.js";
 import AdminService from "../services/admin.service.js";
-import { activationSchema, inviteUserSchema } from "../validation/user.validation.js";
+import { activationSchema, inviteUserSchema } from "../validations/user.validation.js";
 
 export default class AdminController {
+   /** @type {import("express").RequestHandler} */
    static async getUsers(req, res, next) {
       try {
          const result = await AdminService.getUsers();
@@ -19,6 +20,7 @@ export default class AdminController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async getUserInfo(req, res, next) {
       try {
          const result = await AdminService.getUserInfo(req.params.id);
@@ -33,6 +35,7 @@ export default class AdminController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async activation(req, res, next) {
       try {
          const body = validate(activationSchema, req.body);
@@ -52,6 +55,7 @@ export default class AdminController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async inviteUser(req, res, next) {
       try {
          const body = validate(inviteUserSchema, req.body);
@@ -83,6 +87,7 @@ export default class AdminController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async deleteUser(req, res, next) {
       try {
          const result = await AdminService.deleteUser(req.params.id);

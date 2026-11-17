@@ -23,6 +23,7 @@ const ENV = {
    SMPT_SERVICE: process.env.SMPT_SERVICE,
    SMPT_MAIL: process.env.SMPT_MAIL,
    SMPT_PASSWORD: process.env.SMPT_PASSWORD,
+   ALLOW_ORIGINS: process.env.ALLOW_ORIGINS,
 };
 
 export default ENV;

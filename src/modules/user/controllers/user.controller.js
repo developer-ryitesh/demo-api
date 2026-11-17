@@ -1,9 +1,10 @@
 import UserService from "../services/user.service.js";
 import httpCookie from "#libs/cookie/index.js";
 import validate from "#libs/zod/index.js";
-import { updatePasswordSchema } from "../validation/user.validation.js";
+import { updatePasswordSchema } from "../validations/user.validation.js";
 
 export default class UserController {
+   /** @type {import("express").RequestHandler} */
    static async session(req, res, next) {
       try {
          const result = await UserService.session(req.user);
@@ -18,6 +19,7 @@ export default class UserController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async updateProfile(req, res, next) {
       try {
          const result = await UserService.updateProfile({
@@ -36,6 +38,7 @@ export default class UserController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async updatePassword(req, res, next) {
       try {
          const body = validate(updatePasswordSchema, req.body);
@@ -55,6 +58,7 @@ export default class UserController {
       }
    }
 
+   /** @type {import("express").RequestHandler} */
    static async logout(req, res, next) {
       try {
          const cookie = httpCookie(res);

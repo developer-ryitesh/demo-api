@@ -1,7 +1,7 @@
 import httpCookie from "#libs/cookie/index.js";
 import validate from "#libs/zod/index.js";
 import AuthService from "../services/auth.service.js";
-import { loginSchema, registerSchema } from "../validation/auth.validation.js";
+import { loginSchema, registerSchema } from "../validations/auth.validation.js";
 
 export default class AuthController {
    /** @type {import("express").RequestHandler} */

@@ -6,9 +6,14 @@ import createHttpError from "http-errors";
 import appRoutes from "./routes.js";
 import swaggerSetup from "../../docs/index.js";
 import { renderView } from "#libs/view/index.js";
+import ENV from "#config/env.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+   origin: ENV.ALLOW_ORIGINS?.split(",") || [],
+   credentials: true,
+   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api-docs", ...swaggerSetup());
