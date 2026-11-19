@@ -26,11 +26,10 @@ export default function httpCookie(res) {
    };
 
    const options = (expiresAt) => {
-      const isProduction = process.env.NODE_ENV === "production";
       return {
          httpOnly: true,
-         secure: isProduction,
-         sameSite: isProduction ? "none" : "lax",
+         secure: ENV.IS_PRODUCTION,
+         sameSite: ENV.IS_PRODUCTION ? "none" : "lax",
          ...(expiresAt && { expires: expiresAt }),
       };
    };
